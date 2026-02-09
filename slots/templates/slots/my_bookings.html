@@ -1,0 +1,311 @@
+{% extends 'slots/base.html' %}
+{% load static %}
+
+{% block title %}My Bookings - Cricket Slot Booking{% endblock %}
+
+{% block extra_css %}
+<style>
+
+  /* ===== Page Container ===== */
+  .booking-container {
+    padding-top: 90px;
+    padding-bottom: 40px;
+  }
+
+  /* ===== Header Card ===== */
+  .booking-header {
+    background: linear-gradient(135deg,#1B5E20,#0B1D13);
+    border-radius: 22px;
+    padding: 35px;
+    color: white;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.15);
+  }
+
+  .booking-header-icon {
+    width: 62px;
+    height: 62px;
+    background: rgba(255,215,0,0.15);
+    border: 1px solid rgba(255,215,0,0.3);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .booking-header-icon i {
+    font-size: 30px;
+    color: #FFD700;
+  }
+
+  .booking-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .booking-header p {
+    margin-bottom: 0px;
+    opacity: 0.8;
+  }
+
+  /* ===== Top Action Bar ===== */
+  .booking-actions {
+    margin-top: 18px;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .booking-actions .info-text {
+    color: #6c757d;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .booking-actions .btn-group-custom {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* ===== Buttons ===== */
+  .btn-primary-custom {
+    background: #2E7D32 !important;
+    border: none !important;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 8px 16px;
+    color: white;
+  }
+
+  .btn-primary-custom:hover {
+    background: #1B5E20 !important;
+    color: white !important;
+  }
+
+  .btn-outline-secondary-custom {
+    border-radius: 12px;
+    font-weight: 700;
+    padding: 8px 16px;
+  }
+
+  .btn-outline-danger-custom {
+    border-radius: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+  }
+
+  /* ===== Table Card ===== */
+  .booking-card {
+    border-radius: 20px !important;
+    border: 1px solid rgba(0,0,0,0.08) !important;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
+  /* ===== Table Styling ===== */
+  .booking-table {
+    margin-bottom: 0px !important;
+  }
+
+  .booking-table thead {
+    background: linear-gradient(90deg, #1B5E20, #2E7D32) !important;
+  }
+
+  .booking-table thead th {
+    color: #010000 !important;
+    font-weight: 800;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    border: none !important;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-size: 15px;
+  }
+
+  .booking-table thead th i {
+    color: #FFD700 !important;
+    margin-right: 7px;
+  }
+
+  .booking-table tbody td {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    vertical-align: middle;
+    font-size: 14px;
+  }
+
+  .booking-table tbody tr:hover {
+    background: rgba(255, 215, 0, 0.12) !important;
+    transition: 0.2s;
+  }
+
+  /* ===== Badge Styling ===== */
+  .badge-custom {
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 8px 14px;
+    border-radius: 50px;
+  }
+
+  /* ===== Empty Booking Box ===== */
+  .empty-box {
+    background: white;
+    border-radius: 20px;
+    padding: 45px;
+    text-align: center;
+    border: 1px dashed rgba(0,0,0,0.15);
+    box-shadow: 0px 6px 20px rgba(0,0,0,0.06);
+  }
+
+  .empty-box i {
+    font-size: 55px;
+    color: #2E7D32;
+    margin-bottom: 14px;
+  }
+
+  .empty-box h4 {
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .empty-box p {
+    color: #6c757d;
+    margin-bottom: 18px;
+  }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container booking-container">
+
+  <!-- ===== Header Section ===== -->
+  <div class="booking-header mb-4">
+    <div class="d-flex align-items-center gap-3">
+      <div class="booking-header-icon">
+        <i class="fas fa-ticket-alt"></i>
+      </div>
+      <div>
+        <h1>My Bookings</h1>
+        <p>View and manage your cricket slot bookings</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Actions Section ===== -->
+  <div class="booking-actions">
+    <div class="info-text">
+      <i class="fas fa-info-circle"></i>
+      Here you can check status and cancel confirmed bookings.
+    </div>
+
+    <div class="btn-group-custom">
+      <a href="{% url 'slots:booking_history' %}" class="btn btn-outline-secondary btn-outline-secondary-custom btn-sm">
+        <i class="fas fa-history me-1"></i> Complete History
+      </a>
+
+      <a href="{% url 'slots:dashboard' %}" class="btn btn-primary-custom btn-sm">
+        <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== Booking Table ===== -->
+  {% if bookings %}
+    <div class="card booking-card">
+      <div class="table-responsive">
+        <table class="table table-hover text-info table-striped align-middle booking-table">
+          
+          <thead >
+            <tr>
+              <th class="ps-4"><i class="fas fa-calendar"></i> Date</th>
+              <th><i class="fas fa-clock"></i> Time</th>
+              <th><i class="fas fa-users"></i> Type</th>
+              <th><i class="fas fa-info-circle"></i> Status</th>
+              <th><i class="fas fa-calendar-plus"></i> Booked On</th>
+              <th class="text-end pe-4"><i class="fas fa-cogs"></i> Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for booking in bookings %}
+              <tr>
+
+                <td class="ps-4 fw-bold">
+                  {{ booking.slot.date|date:'d M Y' }}
+                </td>
+
+                <td class="text-nowrap">
+                  {{ booking.slot.get_time_slot_display }}
+                </td>
+
+                <td class="text-nowrap fw-semibold">
+                  {{ booking.slot.get_cricket_type_display }}
+                </td>
+
+                <td class="text-nowrap">
+                  {% if booking.status == 'confirmed' %}
+                    <span class="badge bg-success badge-custom">
+                      <i class="fas fa-check-circle me-1"></i> Confirmed
+                    </span>
+                  {% elif booking.status == 'cancelled' %}
+                    <span class="badge bg-danger badge-custom">
+                      <i class="fas fa-times-circle me-1"></i> Cancelled
+                    </span>
+                  {% else %}
+                    <span class="badge bg-warning text-dark badge-custom">
+                      <i class="fas fa-hourglass-half me-1"></i> Pending
+                    </span>
+                  {% endif %}
+                </td>
+
+                <td class="text-nowrap">
+                  {{ booking.created_at|date:'d M Y' }}
+                </td>
+
+                <td class="text-end pe-4">
+                  {% if booking.status == 'confirmed' %}
+                    <form method="POST"
+                          action="{% url 'slots:cancel_booking' booking.id %}"
+                          class="d-inline">
+                      {% csrf_token %}
+                      <button type="submit"
+                              class="btn btn-sm btn-outline-danger btn-outline-danger-custom"
+                              onclick="return confirm('Are you sure you want to cancel this booking?');">
+                        <i class="fas fa-times me-1"></i> Cancel
+                      </button>
+                    </form>
+                  {% else %}
+                    <span class="text-muted fw-bold">—</span>
+                  {% endif %}
+                </td>
+
+              </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+  <!-- ===== Empty Booking Message ===== -->
+  {% else %}
+    <div class="empty-box mt-4">
+      <i class="fas fa-calendar-times"></i>
+      <h4>No Bookings Found</h4>
+      <p>You have not booked any slots yet. Start booking now!</p>
+      <a href="{% url 'slots:venue_list' %}" class="btn btn-primary-custom">
+        <i class="fas fa-plus-circle me-1"></i> Book a Slot
+      </a>
+    </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}

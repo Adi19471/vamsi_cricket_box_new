@@ -1,0 +1,159 @@
+{% extends 'slots/base.html' %}
+{% load static %}
+
+{% block title %}Register - Cricket Slot Booking{% endblock %}
+
+{% block content %}
+
+<div class="container" style="padding-top: 90px;">
+
+  <!-- HERO -->
+  <div class="p-4 p-md-5 rounded-4 text-white shadow-sm mb-4"
+       style="background: linear-gradient(135deg,#0B4F6C,#0A2540);">
+    <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center justify-content-center rounded-4"
+           style="width:56px;height:56px;background:rgba(255,255,255,.12);">
+        <i class="fas fa-user-plus fs-2" style="color:#F97316;"></i>
+      </div>
+      <div>
+        <h1 class="h3 fw-bold mb-1">Create Account</h1>
+        <p class="mb-0 opacity-75">Register to book your perfect cricket slot</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTH CARD -->
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <div class="d-flex align-items-center justify-content-center rounded-3"
+                 style="width:42px;height:42px;background:rgba(25,135,84,.12);">
+              <i class="fas fa-user-plus text-success"></i>
+            </div>
+            <div>
+              <div class="fw-bold">Create Your Account</div>
+              <div class="text-muted small">Fill in details to get started</div>
+            </div>
+          </div>
+
+          <form method="POST" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                  <div>{{ error }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="{{ form.username.id_for_label }}" class="form-label fw-semibold">Username</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                {{ form.username }}
+              </div>
+              {% if form.username.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.username.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="{{ form.email.id_for_label }}" class="form-label fw-semibold">Email Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                {{ form.email }}
+              </div>
+              {% if form.email.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.email.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="{{ form.password1.id_for_label }}" class="form-label fw-semibold">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                {{ form.password1 }}
+                <button class="btn btn-outline-secondary" type="button" id="togglePass1">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              {% if form.password1.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.password1.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+              <div class="form-text">Use a strong password (letters, numbers, symbols).</div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+              <label for="{{ form.password2.id_for_label }}" class="form-label fw-semibold">Confirm Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-shield-alt"></i></span>
+                {{ form.password2 }}
+                <button class="btn btn-outline-secondary" type="button" id="togglePass2">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              {% if form.password2.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.password2.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-2">
+              <i class="fas fa-check me-2"></i> Register
+            </button>
+
+            <hr class="my-4">
+
+            <p class="text-center mb-0">
+              Already have an account?
+              <a class="text-decoration-none fw-semibold" href="{% url 'slots:login' %}">Login here</a>
+            </p>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Show/Hide password (no external JS needed) -->
+<script>
+  (function () {
+    function toggle(btnId, inputId) {
+      const btn = document.getElementById(btnId);
+      const input = document.getElementById(inputId);
+      if (!btn || !input) return;
+
+      btn.addEventListener('click', function () {
+        const isPassword = input.getAttribute('type') === 'password';
+        input.setAttribute('type', isPassword ? 'text' : 'password');
+        this.innerHTML = isPassword
+          ? '<i class="fas fa-eye-slash"></i>'
+          : '<i class="fas fa-eye"></i>';
+      });
+    }
+
+    // Django default ids are usually id_password1 / id_password2
+    toggle('togglePass1', 'id_password1');
+    toggle('togglePass2', 'id_password2');
+  })();
+</script>
+
+{% endblock %}

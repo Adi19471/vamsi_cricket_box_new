@@ -1,0 +1,605 @@
+
+{% extends 'slots/base.html' %}
+{% load static %}
+
+{% block title %}Welcome - Cricket Slot Booking{% endblock %}
+
+{% block extra_css %}
+<style>
+  :root {
+    --primary: #1B5E20;        /* Dark Green */
+    --secondary: #2E7D32;      /* Green */
+    --accent: #FFD700;         /* Stadium Yellow */
+    --bg-page: #F5F7FA;        /* Light Gray */
+    --text-dark: #111111;
+    --text-muted: #555;
+    --text-light: #888;
+    --border-color: rgba(0,0,0,0.1);
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+
+    --shadow-sm: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-md: 0 8px 20px rgba(0,0,0,0.12);
+
+    --transition: all 0.3s ease;
+}
+
+/* Body Background */
+body {
+    background: var(--bg-page);
+    font-family: "Poppins", sans-serif;
+}
+
+/* Navbar Premium */
+.navbar {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    box-shadow: var(--shadow-md);
+    padding: 12px 20px;
+}
+
+.navbar a {
+    color: white !important;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.navbar a:hover {
+    color: var(--accent) !important;
+}
+
+/* HERO SECTION */
+.hero-section {
+    position: relative;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin: 25px auto;
+    box-shadow: var(--shadow-md);
+}
+
+/* Hero Overlay for Dark Effect */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 1;
+}
+
+/* Stadium Light Glow Effect */
+.hero-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,215,0,0.2), transparent 70%);
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    padding: 20px;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+}
+
+.hero-content p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* Hero Buttons */
+.hero-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-buttons .btn {
+    border-radius: 50px;
+    padding: 12px 25px;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.hero-buttons .btn-light {
+    background: var(--accent);
+    border: none;
+    color: #111;
+}
+
+.hero-buttons .btn-light:hover {
+    background: #ffcc00;
+    transform: translateY(-2px);
+}
+
+.hero-buttons .btn-outline-light:hover {
+    background: white;
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Quick Info Cards */
+.quick-info-card {
+    background: white;
+    border-radius: var(--radius-md);
+    padding: 25px 18px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.quick-info-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+}
+
+.quick-info-card i {
+    font-size: 2.5rem;
+    color: var(--accent);
+}
+
+/* Date Filter Card */
+.date-filter-card {
+    background: white;
+    border-radius: var(--radius-md);
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.date-filter-card label {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.date-filter-card select {
+    border-radius: 12px;
+    padding: 10px 14px;
+}
+
+/* Available Slot Cards */
+.slot-card {
+    background: white;
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Left Accent Border */
+.slot-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 6px;
+    background: var(--secondary);
+}
+
+.slot-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+}
+
+/* Slot Header */
+.slot-type {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+/* Slot Detail Lines */
+.slot-details p {
+    margin: 12px 0;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Badge Styles */
+.badge-available {
+    background: rgba(46, 125, 50, 0.15);
+    color: var(--secondary);
+    padding: 8px 14px;
+    border-radius: 50px;
+    font-weight: 700;
+    border: 1px solid rgba(46, 125, 50, 0.3);
+}
+
+.badge-booked {
+    background: rgba(220, 38, 38, 0.15);
+    color: #dc2626;
+    padding: 8px 14px;
+    border-radius: 50px;
+    font-weight: 700;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--secondary);
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    padding: 12px;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+/* Feature Cards */
+.feature-card {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+}
+
+.feature-card i {
+    color: var(--accent);
+    font-size: 2.6rem;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: var(--radius-lg);
+    padding: 55px 25px;
+    margin: 50px auto;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+.cta-section h2 {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+/* Section Title */
+.available-slots-section h2 {
+    font-weight: 800;
+    margin-top: 15px;
+    color: var(--primary);
+}
+
+/* Grid Fix */
+.slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 20px;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1><i class="fas fa-cricket"></i> Cricket Slot Booking</h1>
+        <p>Book your perfect cricket slot online</p>
+        <p style="font-size: 1rem; opacity: 0.9;">Whether Box Cricket or Normal Cricket, find your ideal time slot and book instantly</p>
+        
+        <div class="hero-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'slots:dashboard' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-user"></i> My Dashboard
+                </a>
+                <a href="{% url 'slots:my_bookings' %}" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-ticket-alt"></i> My Bookings
+                </a>
+            {% else %}
+                <a href="{% url 'slots:login' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="{% url 'slots:register' %}" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-user-plus"></i> Register
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Quick Info Cards -->
+<section class="container">
+    <div class="row mb-4">
+        <div class="col-md-3 col-sm-6">
+            <div class="quick-info-card">
+                <i class="fas fa-clock"></i>
+                <h5>Timing</h5>
+                <p class="mb-0">10am to 6pm</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="quick-info-card">
+                <i class="fas fa-tag"></i>
+                <h5>Weekday Price</h5>
+                <p class="mb-0">₹600/hr</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="quick-info-card">
+                <i class="fas fa-tag"></i>
+                <h5>Weekend Price</h5>
+                <p class="mb-0">₹700/hr</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="quick-info-card">
+                <i class="fas fa-wallet"></i>
+                <h5>Advance</h5>
+                <p class="mb-0">20% Required</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Date Filter -->
+<section class="container">
+    <div class="date-filter-card mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <label class="form-label"><i class="fas fa-calendar"></i> Select Date</label>
+                <select id="dateSelect" class="form-select" onchange="filterByDate()">
+                    <option value="">All Available Dates</option>
+                    {% for date in available_dates %}
+                        <option value="{{ date|date:'Y-m-d' }}">{{ date|date:'d M Y' }} ({{ date|date:'D' }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label"><i class="fas fa-sport"></i> Cricket Type</label>
+                <select id="typeSelect" class="form-select" onchange="filterByDate()">
+                    <option value="">All Types</option>
+                    <option value="box">Box Cricket</option>
+                    <option value="normal">Normal Cricket</option>
+                </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <a href="{% url 'slots:venue' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-info-circle"></i> View Venue Info
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Available Slots -->
+<section class="container available-slots-section">
+    <h2><i class="fas fa-calendar-check"></i> Available Slots</h2>
+    
+    {% if slots %}
+        <div class="slots-grid">
+            {% for slot in slots %}
+                <div class="slot-card" data-date="{{ slot.date|date:'Y-m-d' }}" data-type="{{ slot.cricket_type }}">
+                    <div class="slot-header">
+                        <div class="slot-type">
+                            {% if slot.cricket_type == 'box' %}
+                                <i class="fas fa-square"></i> Box Cricket
+                            {% else %}
+                                <i class="fas fa-circle"></i> Normal Cricket
+                            {% endif %}
+                        </div>
+                        <div class="slot-status">
+                            {% if slot.is_available %}
+                                <span class="badge badge-available">
+                                    <i class="fas fa-check-circle"></i> Available
+                                </span>
+                            {% else %}
+                                <span class="badge badge-booked">
+                                    <i class="fas fa-times-circle"></i> Full
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="slot-details">
+                        <p>
+                            <strong><i class="fas fa-calendar"></i> Date:</strong>
+                            {{ slot.date|date:'d M Y' }}
+                        </p>
+                        <p>
+                            <strong><i class="fas fa-clock"></i> Time:</strong>
+                            {{ slot.get_time_slot_display }}
+                        </p>
+                        <p>
+                            <strong><i class="fas fa-users"></i> Players:</strong>
+                            {{ slot.booked_count }}/{{ slot.max_players }}
+                        </p>
+                        <p>
+                            <strong><i class="fas fa-rupee-sign"></i> Price:</strong>
+                            ₹{{ slot.price }}
+                        </p>
+                    </div>
+                    
+                    <div class="slot-footer">
+                        {% if slot.is_available %}
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'slots:book_slot' slot.id %}" class="btn btn-primary w-100">
+                                    <i class="fas fa-book"></i> Book Now
+                                </a>
+                            {% else %}
+                                <a href="{% url 'slots:login' %}?next={% url 'slots:book_slot' slot.id %}" class="btn btn-primary w-100">
+                                    <i class="fas fa-sign-in-alt"></i> Login to Book
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <button class="btn btn-danger w-100" disabled>
+                                <i class="fas fa-times"></i> Slot Full
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5" style="background: white; border-radius: var(--radius-md); padding: 50px 20px;">
+            <i class="fas fa-calendar-times" style="font-size: 4rem; color: var(--text-light); margin-bottom: 20px;"></i>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">No slots available currently. Check back later!</p>
+        </div>
+    {% endif %}
+</section>
+
+<!-- Features Section -->
+<section class="container" style="margin-top: 50px;">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card feature-card">
+                <div class="card-body text-center">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h5 class="card-title">View Available Slots</h5>
+                    <p class="card-text">Browse all available cricket slots with different timings and types</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card feature-card">
+                <div class="card-body text-center">
+                    <i class="fas fa-ticket-alt"></i>
+                    <h5 class="card-title">Easy Booking</h5>
+                    <p class="card-text">Quick and secure booking process with instant confirmation</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card feature-card">
+                <div class="card-body text-center">
+                    <i class="fas fa-users"></i>
+                    <h5 class="card-title">Box & Normal Cricket</h5>
+                    <p class="card-text">Choose between Box Cricket and Normal Cricket based on your preference</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card feature-card">
+                <div class="card-body text-center">
+                    <i class="fas fa-lock"></i>
+                    <h5 class="card-title">Secure & Safe</h5>
+                    <p class="card-text">Your data is protected with advanced security measures</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="container">
+    <div class="cta-section">
+        <h2><i class="fas fa-rocket"></i> Ready to Book Your Slot?</h2>
+        {% if not user.is_authenticated %}
+            <p class="lead">Login or create an account to start booking your cricket slots today!</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="{% url 'slots:login' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="{% url 'slots:register' %}" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-user-plus"></i> Register
+                </a>
+            </div>
+        {% else %}
+            <p class="lead">Browse available slots and book your favorite time!</p>
+        {% endif %}
+    </div>
+</section>
+
+<script>
+    function filterByDate() {
+        const date = document.getElementById('dateSelect').value;
+        const type = document.getElementById('typeSelect').value;
+        const slots = document.querySelectorAll('.slot-card');
+        
+        slots.forEach(slot => {
+            const slotDate = slot.dataset.date;
+            const slotType = slot.dataset.type;
+            
+            let show = true;
+            
+            if (date && slotDate !== date) {
+                show = false;
+            }
+            
+            if (type && slotType !== type) {
+                show = false;
+            }
+            
+            slot.style.display = show ? 'flex' : 'none';
+        });
+        
+        // Check if all slots are hidden
+        const visibleSlots = document.querySelectorAll('.slot-card[style="display: flex;"]');
+        const allSlots = document.querySelectorAll('.slot-card');
+        
+        // Note: slots without inline style are also visible by default
+        let hasVisible = false;
+        allSlots.forEach(slot => {
+            if (slot.style.display !== 'none') {
+                hasVisible = true;
+            }
+        });
+        
+        if (!hasVisible) {
+            // Show no slots message
+            const existingMessage = document.querySelector('.no-slots-message');
+            if (!existingMessage) {
+                const message = document.createElement('div');
+                message.className = 'no-slots-message';
+                message.innerHTML = `
+                    <div class="text-center py-5" style="background: white; border-radius: var(--radius-md); padding: 50px 20px; grid-column: 1 / -1;">
+                        <i class="fas fa-search" style="font-size: 4rem; color: var(--text-light); margin-bottom: 20px;"></i>
+                        <p style="color: var(--text-muted); font-size: 1.1rem;">No slots match your selected filters.</p>
+                    </div>
+                `;
+                document.querySelector('.slots-grid').appendChild(message);
+            }
+        } else {
+            const message = document.querySelector('.no-slots-message');
+            if (message) {
+                message.remove();
+            }
+        }
+    }
+</script>
+{% endblock %}
+
+

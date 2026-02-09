@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Cricket Slot Booking System{% endblock %}</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+  <!-- Custom CSS (optional, keep if you want) -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+  <!-- Navigation Bar (Brand far LEFT, menu far RIGHT) -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top"
+       style="background:#1B5E20;">
+    <div class="container-fluid px-4">
+
+      <!-- LEFT: Brand / Logo -->
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2"
+         href="{% url 'slots:home' %}">
+        <i class="fas fa-cricket fs-5"></i>
+        <span>Kohli's Sports Acadamy</span>
+      </a>
+
+      <!-- Mobile toggle -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- RIGHT: Menu -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'slots:home' %}">
+              <i class="fas fa-home me-1"></i> Home
+            </a>
+          </li>
+
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'slots:dashboard' %}">
+                <i class="fas fa-user me-1"></i> My Dashboard
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'slots:my_bookings' %}">
+                <i class="fas fa-ticket-alt me-1"></i> My Bookings
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'slots:venue' %}">
+                <i class="fas fa-map-marker-alt me-1"></i> Venue
+              </a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                 data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle me-1"></i> {{ user.username }}
+              </a>
+
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li>
+                  <a class="dropdown-item" href="{% url 'slots:booking_history' %}">
+                    <i class="fas fa-history me-2"></i> Booking History
+                  </a>
+                </li>
+
+                {% if user.is_staff %}
+                  <li>
+                    <a class="dropdown-item" href="{% url 'admin:index' %}">
+                      <i class="fas fa-cog me-2"></i> Admin Panel
+                    </a>
+                  </li>
+                {% endif %}
+
+                <li><hr class="dropdown-divider" /></li>
+
+                <li>
+                  <a class="dropdown-item" href="{% url 'slots:logout' %}">
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'slots:venue' %}">
+                <i class="fas fa-map-marker-alt me-1"></i> Venue
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'slots:login' %}">
+                <i class="fas fa-sign-in-alt me-1"></i> Login
+              </a>
+            </li>
+          {% endif %}
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Messages/Alerts -->
+  <div class="container-fluid" >
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show " role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- Main Content -->
+  <main class="container-main">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include 'slots/footer.html' %}
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

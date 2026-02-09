@@ -1,0 +1,130 @@
+{% extends 'slots/base.html' %}
+{% load static %}
+
+{% block title %}Login - Cricket Slot Booking{% endblock %}
+
+{% block content %}
+
+<div class="container" style="padding-top: 90px;">
+
+  <!-- HERO -->
+  <div class="p-4 p-md-5 rounded-4 text-white shadow-sm mb-4"
+       style="background: linear-gradient(135deg,#0B4F6C,#0A2540);">
+    <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center justify-content-center rounded-4"
+           style="width:56px;height:56px;background:rgba(255,255,255,.12);">
+        <i class="fas fa-sign-in-alt fs-2" style="color:#F97316;"></i>
+      </div>
+      <div>
+        <h1 class="h3 fw-bold mb-1">Login</h1>
+        <p class="mb-0 opacity-75">Sign in to book your perfect cricket slot</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTH CARD -->
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <div class="d-flex align-items-center justify-content-center rounded-3"
+                 style="width:42px;height:42px;background:rgba(13,110,253,.12);">
+              <i class="fas fa-user-lock text-primary"></i>
+            </div>
+            <div>
+              <div class="fw-bold">Login to Your Account</div>
+              <div class="text-muted small">Enter your credentials to continue</div>
+            </div>
+          </div>
+
+          <form method="POST" novalidate>
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="id_username" class="form-label fw-semibold">Username</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input type="text" name="username" id="id_username"
+                       class="form-control"
+                       placeholder="Enter your username"
+                       autocomplete="username"
+                       required>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="id_password" class="form-label fw-semibold">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" name="password" id="id_password"
+                       class="form-control"
+                       placeholder="Enter your password"
+                       autocomplete="current-password"
+                       required>
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Remember + Forgot (optional links) -->
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="1" id="rememberMe" name="remember_me">
+                <label class="form-check-label small" for="rememberMe">Remember me</label>
+              </div>
+              <!-- If you have forgot password URL, replace # -->
+              <a href="#" class="small text-decoration-none">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2">
+              <i class="fas fa-arrow-right me-2"></i> Login
+            </button>
+
+            <div class="text-center my-4 text-muted">
+              <small>OR</small>
+            </div>
+
+            <!-- Optional CTA -->
+            <a href="{% url 'slots:dashboard' %}" class="btn btn-outline-primary w-100">
+              <i class="fas fa-calendar-check me-2"></i> View Slots
+            </a>
+
+            <hr class="my-4">
+
+            <p class="text-center mb-0">
+              Don’t have an account?
+              <a class="text-decoration-none fw-semibold" href="{% url 'slots:register' %}">Register here</a>
+            </p>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Small JS for show/hide password (no extra file needed) -->
+<script>
+  (function () {
+    const toggleBtn = document.getElementById('togglePassword');
+    const passInput = document.getElementById('id_password');
+    if (!toggleBtn || !passInput) return;
+
+    toggleBtn.addEventListener('click', function () {
+      const isPassword = passInput.getAttribute('type') === 'password';
+      passInput.setAttribute('type', isPassword ? 'text' : 'password');
+      this.innerHTML = isPassword
+        ? '<i class="fas fa-eye-slash"></i>'
+        : '<i class="fas fa-eye"></i>';
+    });
+  })();
+</script>
+
+{% endblock %}

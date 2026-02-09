@@ -1,0 +1,557 @@
+{% extends 'slots/base.html' %}
+{% load static %}
+
+{% block title %}Venue Information - Cricket Slot Booking{% endblock %}
+
+{% block extra_css %}
+<style>
+
+  /* ===== Page Layout ===== */
+  .venue-container {
+    padding-top: 95px;
+    padding-bottom: 50px;
+  }
+
+  /* ===== HERO Section ===== */
+  .venue-hero {
+    background: linear-gradient(135deg,#0B4F6C,#0A2540);
+    border-radius: 22px;
+    padding: 40px;
+    color: white;
+    box-shadow: 0px 12px 35px rgba(0,0,0,0.18);
+  }
+
+  .venue-hero-icon {
+    width: 65px;
+    height: 65px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .venue-hero-icon i {
+    font-size: 32px;
+    color: #F97316;
+  }
+
+  .venue-hero h1 {
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 6px;
+  }
+
+  .venue-hero p {
+    margin: 0;
+    opacity: 0.85;
+    font-size: 15px;
+  }
+
+  /* ===== Cards Global ===== */
+  .venue-card {
+    border-radius: 20px !important;
+    border: 1px solid rgba(0,0,0,0.06) !important;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.07);
+    overflow: hidden;
+  }
+
+  .venue-card .card-body {
+    padding: 28px !important;
+  }
+
+  /* ===== Card Headings ===== */
+  .venue-title {
+    font-weight: 900;
+    color: #0B4F6C;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-size: 18px;
+  }
+
+  .venue-title i {
+    color: #F97316;
+  }
+
+  /* ===== Amenities Boxes ===== */
+  .amenity-box {
+    border-radius: 18px;
+    padding: 16px;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+  }
+
+  .amenity-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+  }
+
+  .amenity-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .amenity-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 16px;
+    background: white;
+    border: 1px solid rgba(0,0,0,0.07);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .amenity-icon i {
+    font-size: 26px;
+  }
+
+  .amenity-text .name {
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+
+  .amenity-text .desc {
+    font-size: 13px;
+    color: #6c757d;
+  }
+
+  /* ===== Pricing Boxes ===== */
+  .pricing-box {
+    border-radius: 18px;
+    padding: 18px;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: #f8f9fa;
+    transition: 0.2s;
+  }
+
+  .pricing-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.08);
+  }
+
+  /* ===== Policies ===== */
+  .policy-title {
+    font-weight: 800;
+    margin-bottom: 10px;
+    font-size: 15px;
+  }
+
+  .policy-title i {
+    margin-right: 6px;
+  }
+
+  /* ===== Contact Section ===== */
+  .contact-list .list-group-item {
+    border-radius: 16px !important;
+    margin-bottom: 12px;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: #fff;
+  }
+
+  /* ===== Buttons ===== */
+  .btn-venue-primary {
+    background: #2E7D32 !important;
+    border: none !important;
+    font-weight: 800;
+    border-radius: 14px;
+    padding: 10px;
+    transition: 0.2s;
+  }
+
+  .btn-venue-primary:hover {
+    background: #1B5E20 !important;
+    transform: translateY(-1px);
+  }
+
+  .btn-venue-outline {
+    border-radius: 14px;
+    font-weight: 800;
+    padding: 10px;
+    transition: 0.2s;
+  }
+
+  .btn-venue-outline:hover {
+    transform: translateY(-1px);
+  }
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container venue-container">
+
+  <!-- HERO -->
+  <div class="venue-hero mb-4">
+    <div class="d-flex align-items-center gap-3">
+      <div class="venue-hero-icon">
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+      <div>
+        <h1>{{ venue.name }}</h1>
+        <p>Your premier destination for box cricket</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row g-4">
+
+    <!-- MAIN -->
+    <div class="col-lg-8">
+
+      <!-- AMENITIES -->
+      <div class="card venue-card mb-4">
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <div class="venue-title">
+              <i class="fas fa-star"></i> Amenities
+            </div>
+            <span class="text-muted small">Facilities available at this venue</span>
+          </div>
+
+          <div class="row g-3">
+
+            <!-- Seating -->
+            <div class="col-md-6">
+              <div class="amenity-box">
+                <div class="amenity-left">
+                  <div class="amenity-icon">
+                    <i class="fas fa-chair {% if venue.has_seating %}text-success{% else %}text-muted{% endif %}"></i>
+                  </div>
+                  <div class="amenity-text">
+                    <div class="name">Seating</div>
+                    <div class="desc">{% if venue.has_seating %}Available{% else %}Not Available{% endif %}</div>
+                  </div>
+                </div>
+
+                {% if venue.has_seating %}
+                  <span class="badge bg-success rounded-pill px-3 py-2">Yes</span>
+                {% else %}
+                  <span class="badge bg-secondary rounded-pill px-3 py-2">No</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Lighting -->
+            <div class="col-md-6">
+              <div class="amenity-box">
+                <div class="amenity-left">
+                  <div class="amenity-icon">
+                    <i class="fas fa-lightbulb {% if venue.has_lighting %}text-warning{% else %}text-muted{% endif %}"></i>
+                  </div>
+                  <div class="amenity-text">
+                    <div class="name">Lighting</div>
+                    <div class="desc">{% if venue.has_lighting %}Available{% else %}Not Available{% endif %}</div>
+                  </div>
+                </div>
+
+                {% if venue.has_lighting %}
+                  <span class="badge bg-warning text-dark rounded-pill px-3 py-2">Yes</span>
+                {% else %}
+                  <span class="badge bg-secondary rounded-pill px-3 py-2">No</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Restrooms -->
+            <div class="col-md-6">
+              <div class="amenity-box">
+                <div class="amenity-left">
+                  <div class="amenity-icon">
+                    <i class="fas fa-restroom {% if venue.has_restrooms %}text-info{% else %}text-muted{% endif %}"></i>
+                  </div>
+                  <div class="amenity-text">
+                    <div class="name">Restrooms</div>
+                    <div class="desc">{% if venue.has_restrooms %}Available{% else %}Not Available{% endif %}</div>
+                  </div>
+                </div>
+
+                {% if venue.has_restrooms %}
+                  <span class="badge bg-info text-dark rounded-pill px-3 py-2">Yes</span>
+                {% else %}
+                  <span class="badge bg-secondary rounded-pill px-3 py-2">No</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Equipments -->
+            <div class="col-md-6">
+              <div class="amenity-box">
+                <div class="amenity-left">
+                  <div class="amenity-icon">
+                    <i class="fas fa-baseball-ball {% if venue.has_equipments %}text-primary{% else %}text-muted{% endif %}"></i>
+                  </div>
+                  <div class="amenity-text">
+                    <div class="name">Equipments</div>
+                    <div class="desc">{% if venue.has_equipments %}Available{% else %}Not Available{% endif %}</div>
+                  </div>
+                </div>
+
+                {% if venue.has_equipments %}
+                  <span class="badge bg-primary rounded-pill px-3 py-2">Yes</span>
+                {% else %}
+                  <span class="badge bg-secondary rounded-pill px-3 py-2">No</span>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Parking -->
+            <div class="col-md-6">
+              <div class="amenity-box">
+                <div class="amenity-left">
+                  <div class="amenity-icon">
+                    <i class="fas fa-parking {% if venue.has_parking %}text-success{% else %}text-muted{% endif %}"></i>
+                  </div>
+                  <div class="amenity-text">
+                    <div class="name">Parking</div>
+                    <div class="desc">{% if venue.has_parking %}Available{% else %}Not Available{% endif %}</div>
+                  </div>
+                </div>
+
+                {% if venue.has_parking %}
+                  <span class="badge bg-success rounded-pill px-3 py-2">Yes</span>
+                {% else %}
+                  <span class="badge bg-secondary rounded-pill px-3 py-2">No</span>
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- POLICIES -->
+      <div class="card venue-card mb-4">
+        <div class="card-body">
+
+          <div class="venue-title">
+            <i class="fas fa-file-contract"></i> Policies
+          </div>
+
+          <!-- Payment -->
+          <div class="mb-4">
+            <div class="policy-title">
+              <i class="fas fa-money-bill-wave text-success"></i> Payment Policy
+            </div>
+
+            <div class="alert alert-success mb-2 rounded-4">
+              <i class="fas fa-check-circle me-2"></i>
+              To reserve your slot, pay a deposit at the time of booking.
+            </div>
+
+            <div class="alert alert-success mb-0 rounded-4">
+              <i class="fas fa-check-circle me-2"></i>
+              Remaining balance can be paid when you arrive at the venue.
+            </div>
+          </div>
+
+          <!-- Cancellation -->
+          <div class="mb-4">
+            <div class="policy-title">
+              <i class="fas fa-ban text-danger"></i> Cancellation Policy
+            </div>
+
+            <div class="alert alert-danger mb-0 rounded-4">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              <strong>No-cancellation:</strong> You can’t cancel once booked.
+            </div>
+          </div>
+
+          <!-- Reschedule -->
+          <div>
+            <div class="policy-title">
+              <i class="fas fa-calendar-alt text-warning"></i> Reschedule Policy
+            </div>
+
+            <div class="alert alert-warning mb-0 rounded-4">
+              <i class="fas fa-exclamation-circle me-2"></i>
+              <strong>No rescheduling:</strong> Rescheduling is not possible.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- CONTACT -->
+      <div class="card venue-card">
+        <div class="card-body">
+
+          <div class="venue-title">
+            <i class="fas fa-phone-alt"></i> Contact Information
+          </div>
+
+          <div class="list-group contact-list">
+
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+              <div>
+                <div class="fw-bold"><i class="fas fa-envelope text-primary me-2"></i>Email</div>
+                <div class="small text-muted">{{ venue.email }}</div>
+              </div>
+              <a class="btn btn-sm btn-outline-primary btn-venue-outline" href="mailto:{{ venue.email }}">
+                <i class="fas fa-paper-plane me-1"></i> Mail
+              </a>
+            </div>
+
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+              <div>
+                <div class="fw-bold"><i class="fas fa-phone text-success me-2"></i>Phone</div>
+                <div class="small text-muted">{{ venue.phone }}</div>
+              </div>
+              <a class="btn btn-sm btn-outline-success btn-venue-outline" href="tel:{{ venue.phone }}">
+                <i class="fas fa-phone me-1"></i> Call
+              </a>
+            </div>
+
+            <div class="list-group-item">
+              <div class="fw-bold"><i class="fas fa-clock text-warning me-2"></i>Timing</div>
+              <div class="small text-muted">
+                {{ venue.opening_time|time:"h:i A" }} to {{ venue.closing_time|time:"h:i A" }}
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- SIDEBAR -->
+    <div class="col-lg-4">
+
+      <!-- PRICING -->
+      <div class="card venue-card mb-4">
+        <div class="card-body">
+
+          <div class="venue-title">
+            <i class="fas fa-tag"></i> Pricing
+          </div>
+
+          <div class="pricing-box mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="badge bg-success rounded-pill px-3 py-2">Mon - Fri</span>
+              <span class="fw-bold fs-5">₹{{ venue.weekday_price }}/hr</span>
+            </div>
+            <div class="text-muted small">
+              <i class="fas fa-wallet me-1"></i>
+              Advance: ₹{{ venue.weekday_advance_amount|floatformat:0 }} ({{ venue.advance_percentage }}%)
+            </div>
+          </div>
+
+          <div class="pricing-box">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="badge bg-warning text-dark rounded-pill px-3 py-2">Sat - Sun</span>
+              <span class="fw-bold fs-5">₹{{ venue.weekend_price }}/hr</span>
+            </div>
+            <div class="text-muted small">
+              <i class="fas fa-wallet me-1"></i>
+              Advance: ₹{{ venue.weekend_advance_amount|floatformat:0 }} ({{ venue.advance_percentage }}%)
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- VENUE DETAILS -->
+      <div class="card venue-card mb-4">
+        <div class="card-body">
+
+          <div class="venue-title">
+            <i class="fas fa-layer-group"></i> Venue Details
+          </div>
+
+          <div class="list-group">
+
+            <div class="list-group-item border-0">
+              <div class="fw-bold">Total Hours</div>
+              <div class="small text-muted">
+                <i class="fas fa-square text-primary me-2"></i>
+                {{ venue.total_boxes }} Box-Cricket Hours{{ venue.total_boxes|pluralize }}
+              </div>
+            </div>
+
+            <div class="list-group-item border-0">
+              <div class="fw-bold">Max Capacity</div>
+              <div class="small text-muted">
+                <i class="fas fa-users text-success me-2"></i>
+                11 Players per slot
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- QUICK ACTIONS -->
+      {% if user.is_authenticated %}
+        <div class="card venue-card mb-4">
+          <div class="card-body">
+
+            <div class="venue-title">
+              <i class="fas fa-rocket"></i> Quick Actions
+            </div>
+
+            <div class="d-grid gap-2">
+              <a href="{% url 'slots:dashboard' %}" class="btn btn-venue-primary">
+                <i class="fas fa-calendar-check me-2"></i> Book a Slot
+              </a>
+
+              <a href="{% url 'slots:my_bookings' %}" class="btn btn-outline-success btn-venue-outline">
+                <i class="fas fa-ticket-alt me-2"></i> My Bookings
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      {% else %}
+        <div class="card venue-card mb-4">
+          <div class="card-body">
+
+            <div class="venue-title">
+              <i class="fas fa-rocket"></i> Get Started
+            </div>
+
+            <p class="text-muted small mb-3">
+              Login or register to book your slot now!
+            </p>
+
+            <div class="d-grid gap-2">
+              <a href="{% url 'slots:login' %}" class="btn btn-venue-primary">
+                <i class="fas fa-sign-in-alt me-2"></i> Login
+              </a>
+
+              <a href="{% url 'slots:register' %}" class="btn btn-outline-success btn-venue-outline">
+                <i class="fas fa-user-plus me-2"></i> Register
+              </a>
+            </div>
+
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

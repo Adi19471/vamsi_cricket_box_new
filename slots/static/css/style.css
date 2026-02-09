@@ -1,0 +1,51 @@
+/* Green UI Theme for Cricket Slot Booking App */
+
+/* Body Background */
+body {
+  background-color: #A5D6A7; /* Light Green */
+  color: #111111; /* Black text */
+  font-family: Arial, sans-serif;
+}
+
+/* Button Styles */
+.btn {
+  background-color: #4CAF50; /* Primary Green */
+  border-color: #4CAF50;
+  color: #FFFFFF; /* White text on buttons */
+}
+
+.btn:hover {
+  background-color: #FFD700; /* Accent Yellow on hover */
+  border-color: #FFD700;
+  color: #111111; /* Black text on hover */
+}
+
+/* Link Styles */
+a {
+  color: #4CAF50; /* Primary Green for links */
+}
+
+a:hover {
+  color: #FFD700; /* Yellow on hover */
+}
+
+/* Additional Styles for Better Theme Integration */
+.navbar-brand {
+  color: #FFFFFF !important; /* Ensure brand text is white on dark navbar */
+}
+
+.nav-link {
+  color: #FFFFFF !important; /* White nav links */
+}
+
+.nav-link:hover {
+  color: #FFD700 !important; /* Yellow on hover */
+}
+
+/* Container Background for Content Areas */
+.container-main {
+  background-color: #FFFFFF; /* White background for main content */
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 80px; /* Account for fixed navbar */
+}

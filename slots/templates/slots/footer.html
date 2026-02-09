@@ -1,0 +1,26 @@
+<footer class="site-footer">
+  <div class="container py-4">
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+      <p class="mb-0 small">
+        &copy; 2025 Cricket Slot Booking System. All rights reserved.
+      </p>
+
+      <div class="d-flex align-items-center gap-3">
+        <a href="{% url 'slots:venue' %}" class="text-decoration-none small">
+          <i class="fas fa-map-marker-alt me-1"></i> Venue
+        </a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'slots:my_bookings' %}" class="text-decoration-none small">
+            <i class="fas fa-ticket-alt me-1"></i> My Bookings
+          </a>
+        {% else %}
+          <a href="{% url 'slots:login' %}" class="text-decoration-none small">
+            <i class="fas fa-sign-in-alt me-1"></i> Login
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
