@@ -14,7 +14,8 @@ SECRET_KEY = 'django-insecure-cricket-booking-system-2026-development-only'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*", ".vercel.app"]
+
 
 # Application definition
 INSTALLED_APPS = [
