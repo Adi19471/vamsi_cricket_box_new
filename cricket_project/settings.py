@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-cricket-booking-system-2026-development-only'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*", ".vercel.app"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -33,8 +33,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,22 +63,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cricket_project.wsgi.application'
 
-# # Database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-import dj_database_url
-import os
-
+# Database
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv("DATABASE_URL")
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+# import dj_database_url
+# import os
+
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv("DATABASE_URL")
+#     )
+# }
 
 
 
@@ -138,3 +137,10 @@ MESSAGE_TAGS = {
     'warning': 'warning',
     'error': 'danger',
 }
+
+
+
+import os
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
