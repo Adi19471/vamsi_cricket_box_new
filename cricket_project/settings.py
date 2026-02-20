@@ -30,7 +30,6 @@ INSTALLED_APPS = [
 
 
 
-import os
 
 if os.environ.get("RENDER") == "true":
     from django.contrib.auth.models import User
