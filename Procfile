@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn cricket_project.wsgi:application
+web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn cricket_project.wsgi:application
