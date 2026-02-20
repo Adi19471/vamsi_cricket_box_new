@@ -1,2 +1,1 @@
-web: gunicorn cricket_project.wsgi:application
-
+web: python manage.py migrate && gunicorn cricket_project.wsgi:application
